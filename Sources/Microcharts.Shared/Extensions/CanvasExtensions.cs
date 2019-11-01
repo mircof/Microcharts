@@ -26,12 +26,13 @@ namespace Microcharts
                         IsAntialias = true,
                         Color = labelColor,
                         IsStroke = false,
-                        TextAlign = horizontalAlignment,
+                        TextAlign = horizontalAlignment
+                        //IsVerticalText = true
                     })
                     {
                         var bounds = new SKRect();
                         var text = label;
-                        paint.MeasureText(text, ref bounds);
+                        var test = paint.MeasureText(text, ref bounds);
 
                         var y = point.Y - ((bounds.Top + bounds.Bottom) / 2) - space;
 
@@ -48,7 +49,8 @@ namespace Microcharts
                         FakeBoldText = true,
                         Color = valueColor,
                         IsStroke = false,
-                        TextAlign = horizontalAlignment,
+                        TextAlign = horizontalAlignment
+                        //IsVerticalText = true
                     })
                     {
                         var bounds = new SKRect();

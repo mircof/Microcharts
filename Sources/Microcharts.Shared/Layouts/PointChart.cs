@@ -62,8 +62,8 @@ namespace Microcharts
         protected SKSize CalculateItemSize(int width, int height, float footerHeight, float headerHeight)
         {
             var total = this.Entries.Count();
-            var w = (width - ((total + 1) * this.Margin)) / total;
-            var h = height - this.Margin - footerHeight - headerHeight;
+            var w = (width - YAxeWidth - ((total + 1) * this.MarginX)) / total;
+            var h = height - this.MarginY - footerHeight - headerHeight;
             return new SKSize(w, h);
         }
 
@@ -75,7 +75,7 @@ namespace Microcharts
             {
                 var entry = this.Entries.ElementAt(i);
 
-                var x = this.Margin + (itemSize.Width / 2) + (i * (itemSize.Width + this.Margin));
+                var x = YAxeWidth + this.MarginX + (itemSize.Width / 2) + (i * (itemSize.Width + this.MarginX));
                 var y = headerHeight + (((this.MaxValue - entry.Value) / this.ValueRange) * itemSize.Height);
                 var point = new SKPoint(x, y);
                 result.Add(point);
@@ -111,6 +111,11 @@ namespace Microcharts
 
                         if (bounds.Width > itemSize.Width)
                         {
+                            while (bounds.Width > itemSize.Width)
+                            {
+                                text = text.Substring(0, text.Length - 1);
+                                paint.MeasureText(text, ref bounds);
+                            }
                             text = text.Substring(0, Math.Min(3, text.Length));
                             paint.MeasureText(text, ref bounds);
                         }
@@ -121,7 +126,7 @@ namespace Microcharts
                             paint.MeasureText(text, ref bounds);
                         }
 
-                        canvas.DrawText(text, point.X - (bounds.Width / 2), height - (this.Margin + (this.LabelTextSize / 2)), paint);
+                        canvas.DrawText(text, point.X - (bounds.Width / 2), height - (this.MarginY + (this.LabelTextSize / 2)), paint);
                     }
                 }
             }
@@ -173,7 +178,7 @@ namespace Microcharts
                 {
                     var entry = this.Entries.ElementAt(i);
                     var point = points[i];
-                    var isAbove = point.Y > (this.Margin + (itemSize.Height / 2));
+                    var isAbove = point.Y > (this.MarginY + (itemSize.Height / 2));
 
                     if (!string.IsNullOrEmpty(entry.ValueLabel))
                     {
@@ -192,7 +197,7 @@ namespace Microcharts
                                 paint.MeasureText(text, ref bounds);
 
                                 canvas.RotateDegrees(90);
-                                canvas.Translate(this.Margin, -point.X + (bounds.Height / 2));
+                                canvas.Translate(this.MarginX, -point.X + (bounds.Height / 2));
 
                                 canvas.DrawText(text, 0, 0, paint);
                             }
@@ -202,13 +207,20 @@ namespace Microcharts
             }
         }
 
+        protected float CalculateYAxeWidth(SKRect[] valueLabelSizes)
+        {
+            var maxValueLabelWidth = valueLabelSizes.Max(x => x.Width);
+            return MarginX + maxValueLabelWidth + 20;
+
+        }
+
         protected float CalculateFooterHeight(SKRect[] valueLabelSizes)
         {
-            var result = this.Margin;
+            var result = this.MarginY;
 
             if (this.Entries.Any(e => !string.IsNullOrEmpty(e.Label)))
             {
-                result += this.LabelTextSize + this.Margin;
+                result += this.LabelTextSize + this.MarginY;
             }
 
             return result;
@@ -216,14 +228,14 @@ namespace Microcharts
 
         protected float CalculateHeaderHeight(SKRect[] valueLabelSizes)
         {
-            var result = this.Margin;
+            var result = this.MarginY;
 
             if (this.Entries.Any())
             {
                 var maxValueWidth = valueLabelSizes.Max(x => x.Width);
                 if (maxValueWidth > 0)
                 {
-                    result += maxValueWidth + this.Margin;
+                    result += maxValueWidth + this.MarginY;
                 }
             }
 

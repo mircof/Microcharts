@@ -79,7 +79,7 @@ namespace Microcharts
                 });
 
                 var center = new SKPoint(width / 2, height / 2);
-                var radius = ((Math.Min(width, height) - (2 * Margin)) / 2) - captionHeight;
+                var radius = ((Math.Min(width, height) - (2 * Math.Max(MarginX, MarginY))) / 2) - captionHeight;
                 var rangeAngle = (float)((Math.PI * 2) / total);
                 var startAngle = (float)Math.PI;
 

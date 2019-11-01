@@ -84,7 +84,7 @@ namespace Microcharts
             this.DrawCaption(canvas, width, height);
 
             var sumValue = this.Entries.Sum(x => Math.Abs(x.Value));
-            var radius = (Math.Min(width, height) - (2 * Margin)) / 2;
+            var radius = (Math.Min(width, height) - (2 * Math.Max(MarginX, MarginY))) / 2;
             var cx = width / 2;
             var cy = height / 2;
             var lineWidth = (this.LineSize < 0) ? (radius / ((this.Entries.Count() + 1) * 2)) : this.LineSize;

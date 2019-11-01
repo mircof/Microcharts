@@ -16,7 +16,23 @@ namespace Microcharts
         /// Gets or sets the global margin.
         /// </summary>
         /// <value>The margin.</value>
-        public float Margin { get; set; } = 20;
+        public float MarginX { get; set; } = 10;
+
+        /// <summary>
+        /// Gets or sets the global margin.
+        /// </summary>
+        /// <value>The margin.</value>
+        public float MarginY { get; set; } = 20;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public float YAxeWidth { get; set; } = 100;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Boolean showYAxe { get; set; } = false;
 
         /// <summary>
         /// Gets or sets the text size of the labels.
@@ -133,15 +149,16 @@ namespace Microcharts
         /// <param name="isLeft">If set to <c>true</c> is left.</param>
         protected void DrawCaptionElements(SKCanvas canvas, int width, int height, List<Entry> entries, bool isLeft)
         {
-            var margin = 2 * this.Margin;
-            var availableHeight = height - (2 * margin);
-            var x = isLeft ? this.Margin : (width - this.Margin - this.LabelTextSize);
+            var marginX = this.MarginX;
+            var marginY = 2 * this.MarginY;
+            var availableHeight = height - (2 * marginY);
+            var x = isLeft ? this.MarginX : (width - this.MarginX - this.LabelTextSize);
             var ySpace = (availableHeight - this.LabelTextSize) / ((entries.Count <= 1) ? 1 : entries.Count - 1);
 
             for (int i = 0; i < entries.Count; i++)
             {
                 var entry = entries.ElementAt(i);
-                var y = margin + (i * ySpace);
+                var y = marginY + (i * ySpace);
                 if (entries.Count <= 1)
                 {
                     y += (availableHeight - this.LabelTextSize) / 2;
@@ -155,7 +172,7 @@ namespace Microcharts
                     var hasOffset = hasLabel && hasValueLabel;
                     var captionMargin = this.LabelTextSize * 0.60f;
                     var space = hasOffset ? captionMargin : 0;
-                    var captionX = isLeft ? this.Margin : width - this.Margin - this.LabelTextSize;
+                    var captionX = isLeft ? this.MarginX : width - this.MarginX - this.LabelTextSize;
 
                     using (var paint = new SKPaint
                     {
@@ -163,7 +180,7 @@ namespace Microcharts
                         Color = entry.Color,
                     })
                     {
-                        var rect = SKRect.Create(captionX, y, this.LabelTextSize, this.LabelTextSize);
+                        var rect = SKRect.Create(captionX, y, this.LabelTextSize + 150, this.LabelTextSize);
                         canvas.DrawRect(rect, paint);
                     }
 

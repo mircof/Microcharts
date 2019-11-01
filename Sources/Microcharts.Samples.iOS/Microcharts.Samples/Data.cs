@@ -38,34 +38,34 @@
 
 		public static (string label, int value)[] PositiveData =
 		{
-			("January",     400),
-			("February",    600),
-			("March",       900),
-			("April",       100),
-			("May",         200),
-			("June",        500),
-			("July",        300),
-			("August",      200),
-			("September",   200),
-			("October",     800),
-			("November",    950),
-			("December",    700),
+			("January12345",     400),
+			("February12345",    600),
+			("March12345",       900),
+			("April12345",       100),
+			("May12345",         200),
+			("June12345",        500),
+			("July12345",        300),
+			("August12345",      200),
+			("September12345",   200),
+			("October12345",     800),
+			("November12345",    950),
+			("December12345",    700),
 		};
 
 		public static (string label, int value)[] MixedData =
 		{
-			("January",     -400),
-			("February",    600),
-			("March",       900),
-			("April",       100),
-			("May",         -200),
-			("June",        500),
-			("July",        300),
-			("August",      -200),
-			("September",   200),
-			("October",     800),
-			("November",    950),
-			("December",    -700),
+			("January12345",     -400),
+			("February12345",    600),
+			("March12345",       900),
+			("April12345",       100),
+			("May12345",         -200),
+			("June12345",        500),
+			("July12345",        300),
+			("August12345",      -200),
+			("September12345",   200),
+			("October12345",     800),
+			("November12345",    950),
+			("December12345",    -700),
 		};
 
 		public static (string label, int value)[] NegativeData =
@@ -125,7 +125,8 @@
 					LineSize = 8,
 					PointMode = PointMode.Square,
 					PointSize = 18,
-				},
+                    showYAxe = true
+                },
 				new DonutChart() { Entries = entries },
 				new RadialGaugeChart() { Entries = entries },
 				new RadarChart() { Entries = entries },
@@ -160,7 +161,7 @@
 			{
 				new BarChart() { Entries = entries },
 				new PointChart() { Entries = entries },
-				new LineChart() { Entries = entries },
+				new LineChart() { Entries = entries, showYAxe = true },
 				new DonutChart() { Entries = entries },
 				new RadialGaugeChart() { Entries = entries },
 				new RadarChart() { Entries = entries },
@@ -197,7 +198,7 @@
 				Label = hasLabels ? d.label : null,
 				ValueLabel = hasValueLabel ? d.value.ToString() : null,
 				TextColor = TextColor,
-				Color = isSingleColor ? Colors[2] : NextColor(),
+				Color = isSingleColor ? Colors[2] : NextColor()
 			}).ToArray();
 		}
 	}

@@ -88,7 +88,7 @@ namespace Microcharts
                         if (height < MinBarHeight)
                         {
                             height = MinBarHeight;
-                            if (y + height > this.Margin + itemSize.Height)
+                            if (y + height > this.MarginY + itemSize.Height)
                             {
                                 y = headerHeight + itemSize.Height - height;
                             }
